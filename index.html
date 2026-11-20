@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f8f8f3" />
+  <meta name="description" content="NovaMart — a fictional store for better everyday tech and home essentials. Explore the collection and meet Nova, our AI shopping and support assistant." />
+  <title>NovaMart — Better everyday.</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #183337;
+      --ink-soft: #54666a;
+      --cream: #f8f8f3;
+      --paper: #ffffff;
+      --mint: #d5f2e3;
+      --lime: #c9fb83;
+      --border: #e5eae4;
+      --sea: #0d6965;
+      --radius: 24px;
+      --shadow: 0 15px 35px rgba(21, 65, 55, .08);
+      font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      scroll-behavior: smooth;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    a { text-decoration: none; color: inherit; }
+    svg { display: block; }
+    .container { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+    .announcement { background: var(--ink); color: #ebf7f1; text-align: center; padding: 10px 16px; font-size: .77rem; letter-spacing: .045em; font-weight: 600; }
+    .announcement span { color: var(--lime); }
+    .site-header { background: rgba(248,248,243,.96); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 15; backdrop-filter: blur(15px); }
+    .nav { display: flex; align-items: center; justify-content: space-between; min-height: 80px; gap: 20px; }
+    .logo { display: inline-flex; align-items: center; gap: 9px; font-family: Outfit, sans-serif; font-size: 1.85rem; letter-spacing: -.075em; font-weight: 800; line-height: 1; }
+    .logo-mark { width: 33px; height: 33px; border-radius: 11px; background: var(--ink); color: var(--lime); display: grid; place-items: center; font-size: 1.5rem; transform: rotate(-9deg); }
+    .logo .dot { color: #33a18e; }
+    .nav-links { display: flex; align-items: center; gap: clamp(16px, 3vw, 36px); margin-left: auto; font-weight: 600; font-size: .86rem; }
+    .nav-links a { color: #455d5c; transition: color .2s; }
+    .nav-links a:hover, .footer-links a:hover { color: #0b9690; }
+    .nav-help { border: 1px solid #1e5351; padding: 11px 19px; border-radius: 100px; font-size: .84rem; white-space: nowrap; font-weight: 700; transition: background .2s, color .2s; }
+    .nav-help:hover { color: white; background: var(--ink); }
+    .hero { padding-top: clamp(38px, 6vw, 76px); padding-bottom: 58px; }
+    .hero-grid { display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: clamp(30px, 5vw, 70px); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: .15em; font-weight: 800; font-size: .71rem; }
+    .eyebrow .line { width: 26px; height: 2px; background: var(--sea); border-radius: 10px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: Outfit, sans-serif; letter-spacing: -.047em; }
+    .hero h1 { font-weight: 700; font-size: clamp(3.75rem, 7vw, 6.25rem); line-height: .99; margin: 25px 0; max-width: 660px; }
+    .hero h1 em { font-weight: 500; font-style: normal; color: var(--sea); position: relative; }
+    .hero p { max-width: 430px; font-size: 1.06rem; color: var(--ink-soft); line-height: 1.8; margin: 0 0 30px; }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .btn { min-height: 52px; border-radius: 100px; padding: 15px 25px; display: inline-flex; justify-content: center; align-items: center; gap: 11px; border: 1px solid transparent; font-size: .89rem; font-weight: 700; cursor: pointer; transition: transform .2s, background .2s, box-shadow .2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--ink); color: #fff; box-shadow: 0 10px 24px rgba(20,61,56,.15); }
+    .btn-primary:hover { background: #28595b; }
+    .btn-ghost { border-color: #cbd7cf; background: transparent; color: var(--ink); }
+    .btn-ghost:hover { background: white; }
+    .btn-light { background: var(--lime); color: #153b33; }
+    .btn-light:hover { background: #d9ffa5; }
+    .btn svg { width: 17px; height: 17px; }
+    .hero-footnote { display: flex; align-items: center; gap: 9px; margin-top: 28px; color: #647973; font-size: .77rem; }
+    .pulse { width: 9px; height: 9px; border-radius: 50%; background: #59bda2; box-shadow: 0 0 0 5px rgba(89,189,162,.15); flex-shrink: 0; }
+    .hero-scene { position: relative; border-radius: 34px; min-height: 500px; background: radial-gradient(circle at 72% 16%, #e4f6d1 0 16%, transparent 39%), linear-gradient(140deg, #cfeade, #a3d7c7 62%, #86bdb5); overflow: hidden; isolation: isolate; display: flex; align-items: center; justify-content: center; }
+    .scene-orbit { width: 390px; height: 390px; border-radius: 50%; position: absolute; background: rgba(248,255,245,.38); top: 7%; left: 11%; box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
+    .scene-orbit::before { content: ""; position: absolute; width: 510px; height: 510px; border: 1px solid rgba(255,255,255,.29); border-radius: 50%; top: -60px; left: -60px; }
+    .hero-headphones { position: relative; width: min(98%, 500px); filter: drop-shadow(18px 32px 21px rgba(12,68,59,.25)); transform: rotate(-8deg); z-index: 1; animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-9px) rotate(-8deg); } }
+    .scene-label { position: absolute; z-index: 2; bottom: 24px; left: 24px; border-radius: 20px; padding: 17px 20px; min-width: 205px; background: rgba(255,255,255,.93); box-shadow: var(--shadow); backdrop-filter: blur(15px); }
+    .scene-label small { text-transform: uppercase; letter-spacing: .14em; font-size: .61rem; font-weight: 800; color: var(--sea); }
+    .scene-label strong { display: block; font-family: Outfit, sans-serif; font-size: 1.1rem; margin: 5px 0; }
+    .scene-label span { display: block; font-size: .76rem; color: #657874; }
+    .scene-sticker { position: absolute; top: 24px; right: 24px; background: var(--lime); border-radius: 100%; width: 84px; height: 84px; display: grid; place-items: center; text-align: center; font-family: Outfit, sans-serif; font-weight: 800; font-size: .88rem; line-height: 1.05; transform: rotate(12deg); z-index: 2; }
+    .benefits { border-block: 1px solid var(--border); background: #fefefc; }
+    .benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); padding-block: 24px; }
+    .benefit { display: flex; align-items: center; gap: 13px; padding-inline: 32px; border-right: 1px solid var(--border); }
+    .benefit:first-child { padding-left: 0; }
+    .benefit:last-child { border-right: 0; }
+    .benefit-icon { width: 40px; height: 40px; background: #e5f4e9; color: var(--sea); display: grid; place-items: center; border-radius: 13px; font-size: 1.15rem; flex: 0 0 auto; }
+    .benefit strong { display: block; font-weight: 800; font-size: .84rem; }
+    .benefit span { display: block; color: var(--ink-soft); font-size: .73rem; margin-top: 3px; }
+    .collection { padding-top: 100px; padding-bottom: 110px; }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 28px; }
+    .section-head h2 { font-size: clamp(2.3rem, 4.2vw, 4rem); margin: 10px 0 7px; line-height: 1.08; }
+    .section-head p { color: var(--ink-soft); margin: 0; line-height: 1.7; font-size: .91rem; max-width: 440px; }
+    .filter-row { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; padding: 10px 0 28px; }
+    .filter-btn { border: 1px solid #dce5dc; border-radius: 999px; background: white; padding: 9px 16px; cursor: pointer; color: #4d6262; font-weight: 700; font-size: .81rem; transition: background .2s, color .2s, border-color .2s; }
+    .filter-btn:hover { border-color: var(--sea); }
+    .filter-btn[aria-pressed="true"] { color: #fff; background: var(--ink); border-color: var(--ink); }
+    .filter-btn span { opacity: .68; margin-left: 3px; font-size: .72rem; }
+    .items-status { margin-left: auto; font-size: .77rem; color: #73817c; }
+    .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+    .product-card { min-width: 0; border-radius: 21px; background: #fff; border: 1px solid #e9ede7; overflow: hidden; transition: transform .2s, box-shadow .2s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .product-card[hidden] { display: none; }
+    .art { height: 214px; position: relative; display: grid; place-items: center; overflow: hidden; isolation: isolate; }
+    .art::before { content:""; width: 190px; height: 190px; background: rgba(255,255,255,.44); border-radius: 50%; position: absolute; top: 6px; right: -23px; }
+    .art svg { width: min(100%, 230px); height: 183px; position: relative; z-index: 1; filter: drop-shadow(10px 17px 8px rgba(41,67,54,.12)); }
+    .art--sage { background: #e7efe7; }
+    .art--peach { background: #f6e7db; }
+    .art--blue { background: #dfebf0; }
+    .art--lilac { background: #eee7f1; }
+    .art--sand { background: #f2efe4; }
+    .art--mint { background: #dcefe8; }
+    .tag { position: absolute; top: 14px; left: 15px; z-index: 2; font-size: .65rem; letter-spacing: .035em; font-weight: 800; padding: 7px 10px; background: rgba(255,255,255,.88); border-radius: 999px; color: #456259; }
+    .product-info { padding: 18px 17px 17px; display: flex; flex-direction: column; min-height: 193px; }
+    .product-category { text-transform: uppercase; color: var(--sea); font-size: .65rem; font-weight: 800; letter-spacing: .09em; }
+    .product-name { font-family: Outfit, sans-serif; font-size: 1.16rem; margin: 8px 0 6px; line-height: 1.22; letter-spacing: -.035em; }
+    .product-desc { color: var(--ink-soft); font-size: .78rem; line-height: 1.55; margin: 0; }
+    .product-bottom { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: auto; padding-top: 17px; }
+    .price { font-family: Outfit, sans-serif; font-size: 1.2rem; letter-spacing: -.035em; font-weight: 700; }
+    .quick-view { border: 1px solid #d6e1da; border-radius: 100px; background: #fff; padding: 8px 11px; cursor: pointer; font-weight: 700; font-size: .72rem; color: var(--ink); transition: background .2s, border-color .2s; }
+    .quick-view:hover { background: var(--mint); border-color: #acd9c3; }
+    .collection-foot { display: flex; gap: 10px; justify-content: center; margin-top: 29px; font-size: .77rem; color: #768781; }
+    .collection-foot strong { color: var(--sea); }
+    .support-section { background: #173737; color: #f8fff9; padding: 86px 0; position: relative; overflow: hidden; }
+    .support-section::before { content:""; position: absolute; top: -220px; right: -140px; width: 630px; height: 630px; border-radius: 50%; background: radial-gradient(circle, rgba(152,222,178,.16), transparent 67%); pointer-events: none; }
+    .support-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(36px, 7vw, 105px); position: relative; }
+    .support-kicker { display: inline-flex; align-items: center; gap: 9px; font-size: .71rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--lime); }
+    .support-section h2 { font-size: clamp(2.75rem, 4.9vw, 4.7rem); line-height: 1.04; margin: 18px 0 18px; }
+    .support-section h2 em { color: var(--lime); font-style: normal; }
+    .support-section .lead { font-size: .99rem; line-height: 1.8; color: #c4d7d0; max-width: 420px; }
+    .support-agent { display: inline-flex; align-items: center; gap: 12px; padding: 13px 18px; background: rgba(223,248,227,.1); border: 1px solid rgba(223,248,227,.2); border-radius: 15px; margin-top: 16px; }
+    .agent-orb { width: 37px; height: 37px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #d6ffb7, #81d9b0 45%, #3592a4); box-shadow: 0 0 0 4px rgba(255,255,255,.07); }
+    .support-agent strong { display: block; font-size: .81rem; }
+    .support-agent span { display: block; font-size: .74rem; color: #afcdc1; margin-top: 3px; }
+    .support-guide { background: #f8fcf6; color: var(--ink); border-radius: 27px; padding: clamp(24px, 4vw, 37px); box-shadow: 0 20px 55px rgba(4,30,28,.15); }
+    .support-guide h3 { margin: 0 0 6px; font-size: 1.7rem; }
+    .support-guide > p { font-size: .85rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 19px; }
+    .faq { border-top: 1px solid #e0eae2; }
+    .faq:last-of-type { border-bottom: 1px solid #e0eae2; }
+    .faq summary { display: flex; list-style: none; justify-content: space-between; align-items: center; gap: 14px; cursor: pointer; padding: 17px 0; font-size: .86rem; font-weight: 800; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font: 400 1.6rem/1 Outfit,sans-serif; color: var(--sea); }
+    .faq[open] summary::after { content:"−"; }
+    .faq p { color: #62756e; line-height: 1.65; font-size: .83rem; padding: 0 17px 17px 0; margin: 0; }
+    .widget-hint { background: #e5f4e6; padding: 17px 18px; border-radius: 15px; color: #255546; font-size: .82rem; font-weight: 700; margin-top: 22px; display: flex; align-items: center; gap: 10px; }
+    .hint-arrow { font-size: 1.25rem; flex: 0 0 auto; }
+    .footer { padding: 36px 0; }
+    .footer-top { display: flex; justify-content: space-between; align-items: center; gap: 25px; }
+    .footer .logo { font-size: 1.55rem; }
+    .footer .logo-mark { width: 27px; height: 27px; font-size: 1.25rem; border-radius: 9px; }
+    .footer-links { display: flex; gap: 28px; font-size: .8rem; font-weight: 700; color: var(--ink-soft); }
+    .footnote { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid var(--border); padding-top: 22px; margin-top: 25px; font-size: .73rem; color: #7b8781; line-height: 1.7; }
+    dialog { border: 0; padding: 0; max-width: min(620px, calc(100vw - 32px)); width: 100%; background: white; border-radius: 25px; color: var(--ink); box-shadow: 0 35px 100px rgba(8,42,38,.28); }
+    dialog::backdrop { background: rgba(6,32,32,.6); backdrop-filter: blur(5px); }
+    .dialog-wrap { display: grid; grid-template-columns: .76fr 1fr; min-height: 325px; }
+    .dialog-art { display: grid; place-items: center; background: #e7efe7; border-radius: 25px 0 0 25px; overflow: hidden; }
+    .dialog-art svg { width: 100%; max-width: 235px; height: 240px; }
+    .dialog-content { padding: 36px 30px; }
+    .dialog-content h2 { margin: 9px 0; font-size: 1.8rem; line-height: 1.12; }
+    .dialog-price { font: 700 1.4rem Outfit,sans-serif; }
+    .dialog-text { margin-top: 20px; margin-bottom: 16px; color: var(--ink-soft); font-size: .86rem; line-height: 1.7; }
+    .dialog-features { padding-left: 18px; color: #425d55; line-height: 1.7; font-size: .84rem; }
+    .dialog-foot { font-size: .72rem; color: #83918b; margin-top: 18px; }
+    .dialog-close { background: #f0f4ee; color: var(--ink); border: 0; border-radius: 50%; position: absolute; right: 12px; top: 12px; width: 32px; height: 32px; cursor: pointer; font-size: 1.2rem; }
+    :focus-visible { outline: 3px solid #49b2a0; outline-offset: 3px; }
+    @media (max-width: 1050px) { .product-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } .benefit { padding-inline: 20px; } .hero-scene { min-height: 430px; } }
+    @media (max-width: 800px) {
+      .hero-grid, .support-grid { grid-template-columns: 1fr; }
+      .hero-grid { gap: 35px; }
+      .hero-scene { min-height: 400px; }
+      .hero h1 { max-width: 700px; }
+      .product-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .collection { padding-top: 76px; padding-bottom: 78px; }
+      .support-grid { gap: 38px; }
+      .benefit-grid { gap: 0; }
+      .benefit { padding: 8px 15px; }
+      .benefit:first-child { padding-left: 0; }
+    }
+    @media (max-width: 570px) {
+      .container { width: min(100% - 32px, 1160px); }
+      .nav { min-height: 67px; }
+      .nav-links { gap: 12px; }
+      .nav-links a:nth-child(2), .nav-links a:nth-child(3) { display: none; }
+      .nav-help { padding: 9px 13px; font-size: .75rem; }
+      .logo { font-size: 1.56rem; }
+      .logo-mark { width: 28px; height: 28px; font-size: 1.3rem; }
+      .hero { padding-top: 37px; padding-bottom: 36px; }
+      .hero h1 { font-size: clamp(3.2rem, 12vw, 4.4rem); }
+      .hero p { font-size: .93rem; }
+      .hero-scene { min-height: 340px; border-radius: 24px; }
+      .hero-headphones { width: 95%; }
+      .scene-sticker { width: 60px; height: 60px; font-size: .68rem; top: 14px; right: 14px; }
+      .scene-label { left: 13px; bottom: 13px; padding: 12px 15px; min-width: 170px; }
+      .scene-orbit { width: 270px; height: 270px; }
+      .benefit-grid { grid-template-columns: 1fr; padding: 16px 0; }
+      .benefit, .benefit:first-child { padding: 9px 0; border-right: 0; }
+      .section-head { display: block; }
+      .section-head h2 { font-size: 2.6rem; }
+      .items-status { flex-basis: 100%; margin: 4px 0 0; }
+      .product-grid { gap: 11px; }
+      .art { height: 156px; }
+      .art svg { max-width: 175px; height: 145px; }
+      .tag { top: 9px; left: 9px; padding: 5px 8px; font-size: .58rem; }
+      .product-info { padding: 14px 12px; min-height: 196px; }
+      .product-name { font-size: 1.04rem; }
+      .product-desc { font-size: .74rem; }
+      .product-bottom { display: block; padding-top: 12px; }
+      .quick-view { margin-top: 11px; display: block; width: 100%; }
+      .footer-top, .footnote { align-items: flex-start; flex-direction: column; gap: 16px; }
+      .footer-links { flex-wrap: wrap; gap: 13px 22px; }
+      .dialog-wrap { grid-template-columns: 1fr; }
+      .dialog-art { height: 160px; border-radius: 25px 25px 0 0; }
+      .dialog-art svg { height: 160px; }
+      .dialog-content { padding: 25px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body>
+  <!-- Shared illustrated product artwork: intentionally stylised for this fictional demo store. -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#527778"/><stop offset="1" stop-color="#153638"/></linearGradient>
+      <linearGradient id="lightmetal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eff9f4"/><stop offset="1" stop-color="#b1c9c5"/></linearGradient>
+    </defs>
+    <symbol id="art-headphones" viewBox="0 0 240 180">
+      <path d="M53 91V78a67 67 0 0 1 134 0v15" fill="none" stroke="#244b4d" stroke-width="19" stroke-linecap="round"/>
+      <path d="M60 81a60 60 0 0 1 120 0" fill="none" stroke="#63898a" stroke-width="7" opacity=".65"/>
+      <rect x="40" y="84" width="40" height="73" rx="20" fill="#173b40"/><rect x="160" y="84" width="40" height="73" rx="20" fill="#173b40"/>
+      <rect x="50" y="95" width="20" height="51" rx="10" fill="#4c8582"/><rect x="170" y="95" width="20" height="51" rx="10" fill="#4c8582"/>
+      <path d="M82 109h12m52 0h12" stroke="#234b4b" stroke-width="8" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="art-speaker" viewBox="0 0 240 180">
+      <ellipse cx="120" cy="156" rx="54" ry="10" fill="#1b4341" opacity=".15"/>
+      <rect x="68" y="31" width="104" height="127" rx="31" fill="#22484d"/>
+      <rect x="75" y="38" width="90" height="110" rx="26" fill="#456b70"/>
+      <circle cx="120" cy="86" r="32" fill="#31585b" stroke="#8babaa" stroke-width="4"/>
+      <circle cx="120" cy="86" r="18" fill="#1f4244"/><circle cx="120" cy="86" r="7" fill="#6e9898"/>
+      <path d="M100 130h40" stroke="#b5d6c9" stroke-linecap="round" stroke-width="4" opacity=".65"/>
+    </symbol>
+    <symbol id="art-pad" viewBox="0 0 240 180">
+      <ellipse cx="122" cy="141" rx="86" ry="20" fill="#325a58" opacity=".14"/>
+      <path d="M44 114q0-24 33-31l60-13q22-4 39 9l19 16q15 12 4 24-5 5-19 8L91 148q-23 5-39-8Z" fill="#294e52"/>
+      <path d="M49 105q5-12 29-18l60-13q20-4 36 8l21 16q12 11-8 16l-92 21q-25 5-40-9Z" fill="#98b8b2"/>
+      <ellipse cx="123" cy="105" rx="34" ry="15" fill="none" stroke="#e9fff4" stroke-width="4" transform="rotate(-13 123 105)"/>
+      <path d="m126 89-13 17h10l-8 16 19-23h-11z" fill="#f5fff5"/>
+    </symbol>
+    <symbol id="art-webcam" viewBox="0 0 240 180">
+      <ellipse cx="120" cy="153" rx="69" ry="10" fill="#39515c" opacity=".13"/>
+      <path d="M99 115v19h42v-19" fill="#3c6063"/><rect x="86" y="132" width="68" height="13" rx="7" fill="#244345"/>
+      <rect x="39" y="43" width="162" height="75" rx="24" fill="#2c5054"/>
+      <rect x="48" y="51" width="144" height="58" rx="20" fill="#648588"/>
+      <circle cx="120" cy="80" r="29" fill="#223d43"/><circle cx="120" cy="80" r="19" fill="#7ca8aa"/>
+      <circle cx="120" cy="80" r="11" fill="#204857"/><circle cx="114" cy="74" r="4" fill="#d6f5ee"/>
+      <circle cx="171" cy="82" r="3" fill="#c5fae7"/>
+    </symbol>
+    <symbol id="art-bank" viewBox="0 0 240 180">
+      <g transform="rotate(-12 120 90)">
+        <rect x="67" y="24" width="106" height="145" rx="23" fill="#294d4c"/>
+        <rect x="74" y="30" width="91" height="128" rx="18" fill="#6f9790"/>
+        <path d="M90 69h56" stroke="#d0e9de" stroke-width="3" opacity=".8"/>
+        <circle cx="97" cy="49" r="3" fill="#d9ffd7"/><circle cx="109" cy="49" r="3" fill="#d9ffd7"/><circle cx="121" cy="49" r="3" fill="#d9ffd7"/><circle cx="133" cy="49" r="3" fill="#9db5aa"/>
+        <path d="m124 84-17 28h15l-9 26 24-35h-16z" fill="#d8f8c7"/>
+      </g>
+    </symbol>
+    <symbol id="art-purifier" viewBox="0 0 240 180">
+      <ellipse cx="120" cy="160" rx="58" ry="10" fill="#315850" opacity=".1"/>
+      <rect x="66" y="20" width="108" height="141" rx="25" fill="#cadbd3" stroke="#6b9c91" stroke-width="3"/>
+      <rect x="76" y="30" width="88" height="121" rx="18" fill="#f2fbf6"/>
+      <circle cx="120" cy="52" r="9" fill="none" stroke="#5da897" stroke-width="4"/>
+      <path d="M94 79h52M94 91h52M94 103h52M94 115h52M94 127h52" stroke="#98bdb4" stroke-width="5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="art-lamp" viewBox="0 0 240 180">
+      <ellipse cx="124" cy="151" rx="73" ry="12" fill="#6b6c43" opacity=".12"/>
+      <path d="M70 144h110q0-12-17-12H87q-17 0-17 12Z" fill="#275e59"/>
+      <path d="m120 132-5-58 46-32" fill="none" stroke="#416d66" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="115" cy="74" r="9" fill="#8ab3a0"/><circle cx="161" cy="42" r="8" fill="#8ab3a0"/>
+      <path d="m144 36 40-19 27 28-49 22Z" fill="#276861"/>
+      <path d="m162 67 49-22" stroke="#fef9dc" stroke-width="5"/>
+      <path d="m166 69 14 44 30-55" fill="#fff7b4" opacity=".2"/>
+    </symbol>
+    <symbol id="art-scale" viewBox="0 0 240 180">
+      <ellipse cx="119" cy="152" rx="82" ry="10" fill="#4b6a61" opacity=".12"/>
+      <path d="m55 87 127-8 23 49q8 18-12 21H54q-17-2-12-19Z" fill="#4b7771"/>
+      <path d="m56 75 123-7q13 0 17 14l6 13-148 9-10-15q-4-11 12-14Z" fill="#cedfd5"/>
+      <path d="m83 119 74-2" stroke="#183f40" stroke-width="22" stroke-linecap="round"/>
+      <rect x="91" y="110" width="63" height="15" rx="4" fill="#b8edcc"/>
+      <path d="M108 118h26" stroke="#23675b" stroke-width="3" stroke-dasharray="4 3"/>
+    </symbol>
+    <symbol id="art-kettle" viewBox="0 0 240 180">
+      <ellipse cx="116" cy="154" rx="71" ry="10" fill="#4d7469" opacity=".12"/>
+      <path d="M70 54h94l-5 82q-3 19-22 20H95q-18-1-20-20Z" fill="url(#lightmetal)" stroke="#5e9385" stroke-width="3"/>
+      <path d="M68 53h100" stroke="#426a67" stroke-width="9" stroke-linecap="round"/>
+      <path d="M96 41h41" stroke="#426a67" stroke-width="13" stroke-linecap="round"/>
+      <path d="M162 73q41-10 43 23 1 30-44 26" fill="none" stroke="#376e67" stroke-width="13"/>
+      <path d="M72 67 46 61l23 29" fill="#689b8e"/>
+      <path d="M94 88v32" stroke="#87b5a6" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="art-blanket" viewBox="0 0 240 180">
+      <ellipse cx="124" cy="150" rx="88" ry="12" fill="#69574a" opacity=".1"/>
+      <path d="M38 111 99 60q9-9 23-4l81 38q15 9 2 21l-59 43q-13 9-27 2L42 125q-13-7-4-14Z" fill="#be9a80"/>
+      <path d="M39 102 98 50q10-7 22-3l82 40q14 8 1 20l-58 44q-12 9-26 2L44 117q-12-6-5-15Z" fill="#f1d5bf"/>
+      <path d="M52 106 115 153M70 89l67 54M88 72l65 55M108 57l63 54" stroke="#fff4e6" stroke-width="3" opacity=".6"/>
+      <path d="M142 149l6 13m4-19 8 14m4-22 8 14" stroke="#d5ab90" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+
+  <div class="announcement">Thoughtful finds. Everyday upgrades. <span>Meet Nova, your AI shopping sidekick ✦</span></div>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary navigation">
+      <a class="logo" href="#top" aria-label="NovaMart home"><span class="logo-mark" aria-hidden="true">✳</span><span>nova<span class="dot">.</span>mart</span></a>
+      <div class="nav-links">
+        <a href="#products">Shop all</a>
+        <a href="#products" class="category-link">Electronics</a>
+        <a href="#support">Help &amp; FAQs</a>
+      </div>
+      <a class="nav-help" href="#support">Ask Nova <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow"><span class="line" aria-hidden="true"></span> Good things, well chosen</span>
+          <h1 id="hero-title">Better<br /><em>everyday.</em></h1>
+          <p>Discover clever tech and lovely little home upgrades. The kind of things you didn't know you needed — until you did.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#products">Explore the collection
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-ghost" href="#support">Meet Nova <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-footnote"><span class="pulse" aria-hidden="true"></span> A fictional shopping experience, powered by AI support.</div>
+        </div>
+        <div class="hero-scene" aria-label="Illustration of Nova Headphones X1">
+          <div class="scene-orbit" aria-hidden="true"></div>
+          <span class="scene-sticker" aria-hidden="true">GOOD<br />SOUND<br />CLUB</span>
+          <svg class="hero-headphones" viewBox="0 0 500 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="258" cy="394" rx="143" ry="21" fill="#2f645b" opacity=".16"/>
+            <path d="M117 252v-59c0-95 62-158 134-158s134 63 134 158v59" fill="none" stroke="#214e4c" stroke-width="45" stroke-linecap="round"/>
+            <path d="M133 184C136 105 181 57 251 57s115 48 118 127" fill="none" stroke="#85bbb0" stroke-width="16" stroke-linecap="round"/>
+            <path d="M100 219c-17 6-30 23-30 45v71c0 30 15 49 41 52l28-3V217Z" fill="#234b4d"/>
+            <path d="M363 217h25c28 0 43 19 43 46v72c0 27-14 47-43 49l-25-3Z" fill="#234b4d"/>
+            <rect x="111" y="209" width="82" height="181" rx="40" fill="#163b41"/>
+            <rect x="307" y="209" width="82" height="181" rx="40" fill="#163b41"/>
+            <rect x="121" y="226" width="54" height="145" rx="26" fill="#57958c"/>
+            <rect x="325" y="226" width="54" height="145" rx="26" fill="#57958c"/>
+            <rect x="143" y="228" width="19" height="140" rx="9" fill="#8dcbc0" opacity=".48"/>
+            <rect x="338" y="228" width="19" height="140" rx="9" fill="#8dcbc0" opacity=".48"/>
+            <path d="M204 296h26m40 0h26" stroke="#315f5b" stroke-width="14" stroke-linecap="round"/>
+          </svg>
+          <div class="scene-label"><small>Featured favourite</small><strong>Nova Headphones X1</strong><span>Wireless · Noise-cancelling · $149</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="benefits">
+      <div class="container benefit-grid">
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">✧</span><div><strong>Little things, big difference</strong><span>Useful tech and home essentials</span></div></div>
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">◈</span><div><strong>10 curated products</strong><span>Explore electronics &amp; home goods</span></div></div>
+        <div class="benefit"><span class="benefit-icon" aria-hidden="true">✳</span><div><strong>Meet Nova</strong><span>Get help with products and orders</span></div></div>
+      </div>
+    </div>
+
+    <section class="collection container" id="products" aria-labelledby="collection-title">
+      <div class="section-head">
+        <div><span class="eyebrow"><span class="line" aria-hidden="true"></span> The NovaMart edit</span><h2 id="collection-title">Made for real life.</h2><p>From workday essentials to home comforts. Find your next favourite in our demo collection.</p></div>
+      </div>
+      <div class="filter-row" role="group" aria-label="Filter products by category">
+        <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All products <span>10</span></button>
+        <button class="filter-btn" type="button" data-filter="electronics" aria-pressed="false">Electronics <span>5</span></button>
+        <button class="filter-btn" type="button" data-filter="home" aria-pressed="false">Home goods <span>5</span></button>
+        <span class="items-status" id="items-status" aria-live="polite">Showing 10 demo products</span>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+        <article class="product-card" data-category="electronics" data-sku="NM-E101" data-description="Over-ear wireless headphones designed for commuting, travel and focus." data-features="Active noise cancellation|Up to 30 hours playback|USB-C charging|Built-in microphone">
+          <div class="art art--sage"><span class="tag">Fan favourite</span><svg role="img" aria-label="Illustration of headphones" viewBox="0 0 240 180"><use href="#art-headphones"/></svg></div>
+          <div class="product-info"><span class="product-category">Electronics · NM-E101</span><h3 class="product-name">Nova Headphones X1</h3><p class="product-desc">Serious sound. Zero distractions.</p><div class="product-bottom"><span class="price">$149</span><button type="button" class="quick-view" aria-label="View Nova Headphones X1 details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="electronics" data-sku="NM-E102" data-description="Compact Wi-Fi smart speaker, suited to small rooms and everyday listening." data-features="Wi-Fi and Bluetooth audio|Voice-enabled playback controls|Multi-room audio support|Mains-powered">
+          <div class="art art--peach"><svg role="img" aria-label="Illustration of smart speaker" viewBox="0 0 240 180"><use href="#art-speaker"/></svg></div>
+          <div class="product-info"><span class="product-category">Electronics · NM-E102</span><h3 class="product-name">Nova Smart Speaker Mini</h3><p class="product-desc">Big sound, small footprint.</p><div class="product-bottom"><span class="price">$79</span><button type="button" class="quick-view" aria-label="View Nova Smart Speaker Mini details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="home" data-sku="NM-H202" data-description="Adjustable LED desk lamp with warm-to-cool lighting for reading and workspaces." data-features="Three colour-temperature settings|Five brightness levels|Adjustable arm|Touch controls">
+          <div class="art art--sand"><span class="tag">Home office pick</span><svg role="img" aria-label="Illustration of desk lamp" viewBox="0 0 240 180"><use href="#art-lamp"/></svg></div>
+          <div class="product-info"><span class="product-category">Home goods · NM-H202</span><h3 class="product-name">Nova LED Desk Lamp</h3><p class="product-desc">Bright ideas, better lighting.</p><div class="product-bottom"><span class="price">$45</span><button type="button" class="quick-view" aria-label="View Nova LED Desk Lamp details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="home" data-sku="NM-H201" data-description="A compact air purifier for bedrooms and home offices. No medical or health outcomes are implied." data-features="Replaceable HEPA-style particle filter|Three fan settings|Sleep mode|Filter-change indicator">
+          <div class="art art--blue"><svg role="img" aria-label="Illustration of air purifier" viewBox="0 0 240 180"><use href="#art-purifier"/></svg></div>
+          <div class="product-info"><span class="product-category">Home goods · NM-H201</span><h3 class="product-name">Nova Compact Air Purifier</h3><p class="product-desc">A little refresh for your space.</p><div class="product-bottom"><span class="price">$129</span><button type="button" class="quick-view" aria-label="View Nova Compact Air Purifier details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="electronics" data-sku="NM-E103" data-description="A wireless charging pad for Qi-compatible devices, suited to desks and bedside tables." data-features="Up to 15 W for compatible devices|Non-slip surface|USB-C power input|Power adapter sold separately">
+          <div class="art art--lilac"><svg role="img" aria-label="Illustration of charging pad" viewBox="0 0 240 180"><use href="#art-pad"/></svg></div>
+          <div class="product-info"><span class="product-category">Electronics · NM-E103</span><h3 class="product-name">Nova Wireless Charging Pad</h3><p class="product-desc">Set it down. Power it up.</p><div class="product-bottom"><span class="price">$29</span><button type="button" class="quick-view" aria-label="View Nova Wireless Charging Pad details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="electronics" data-sku="NM-E104" data-description="USB webcam for meetings and online learning." data-features="1080p video at up to 30 fps|Built-in microphone|Adjustable monitor clip|Privacy shutter">
+          <div class="art art--blue"><svg role="img" aria-label="Illustration of webcam" viewBox="0 0 240 180"><use href="#art-webcam"/></svg></div>
+          <div class="product-info"><span class="product-category">Electronics · NM-E104</span><h3 class="product-name">Nova Full HD Webcam</h3><p class="product-desc">A clearer way to connect.</p><div class="product-bottom"><span class="price">$59</span><button type="button" class="quick-view" aria-label="View Nova Full HD Webcam details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="electronics" data-sku="NM-E105" data-description="Compact portable battery pack for compatible phones and accessories. Number of full charges varies by device." data-features="10,000 mAh rated capacity|USB-C input and output|USB-A output|Four-level charge indicator">
+          <div class="art art--mint"><svg role="img" aria-label="Illustration of power bank" viewBox="0 0 240 180"><use href="#art-bank"/></svg></div>
+          <div class="product-info"><span class="product-category">Electronics · NM-E105</span><h3 class="product-name">Nova Power Bank 10K</h3><p class="product-desc">Keep your day moving.</p><div class="product-bottom"><span class="price">$39</span><button type="button" class="quick-view" aria-label="View Nova Power Bank 10K details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="home" data-sku="NM-H203" data-description="Digital kitchen scale for baking, food preparation and portion measurement." data-features="Up to 5 kg capacity|1 g increments|Tare function|Grams and ounces display">
+          <div class="art art--sage"><svg role="img" aria-label="Illustration of kitchen scale" viewBox="0 0 240 180"><use href="#art-scale"/></svg></div>
+          <div class="product-info"><span class="product-category">Home goods · NM-H203</span><h3 class="product-name">Nova Digital Kitchen Scale</h3><p class="product-desc">A pinch more precision.</p><div class="product-bottom"><span class="price">$24</span><button type="button" class="quick-view" aria-label="View Nova Digital Kitchen Scale details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="home" data-sku="NM-H204" data-description="A stainless-steel electric kettle for everyday hot drinks." data-features="1.7-litre capacity|Automatic shut-off|Boil-dry protection|Water-level window">
+          <div class="art art--peach"><svg role="img" aria-label="Illustration of kettle" viewBox="0 0 240 180"><use href="#art-kettle"/></svg></div>
+          <div class="product-info"><span class="product-category">Home goods · NM-H204</span><h3 class="product-name">Nova Stainless Steel Kettle</h3><p class="product-desc">One more cup, anyone?</p><div class="product-bottom"><span class="price">$49</span><button type="button" class="quick-view" aria-label="View Nova Stainless Steel Kettle details">View details ↗</button></div></div>
+        </article>
+        <article class="product-card" data-category="home" data-sku="NM-H205" data-description="A cotton-rich woven throw for sofas, reading chairs and extra comfort." data-features="Approximately 130 × 170 cm|Cotton-rich woven fabric|Machine-washable on a gentle cycle|Neutral grey finish">
+          <div class="art art--lilac"><svg role="img" aria-label="Illustration of throw blanket" viewBox="0 0 240 180"><use href="#art-blanket"/></svg></div>
+          <div class="product-info"><span class="product-category">Home goods · NM-H205</span><h3 class="product-name">Nova Cotton Throw Blanket</h3><p class="product-desc">Your sofa's new best friend.</p><div class="product-bottom"><span class="price">$35</span><button type="button" class="quick-view" aria-label="View Nova Cotton Throw Blanket details">View details ↗</button></div></div>
+        </article>
+      </div>
+      <div class="collection-foot"><span aria-hidden="true">✳</span> <span>All prices in <strong>USD</strong>. Fictional demonstration catalogue; purchases are not enabled.</span></div>
+    </section>
+
+    <section class="support-section" id="support" aria-labelledby="support-title">
+      <div class="container support-grid">
+        <div>
+          <span class="support-kicker"><span aria-hidden="true">✳</span> Your friendly AI support</span>
+          <h2 id="support-title">Say hello<br />to <em>Nova.</em></h2>
+          <p class="lead">Wondering about an order, returns or which product to pick? Nova is here to help, using the same fictional catalogue and support information as this store.</p>
+          <div class="support-agent"><span class="agent-orb" aria-hidden="true"></span><div><strong>Nova · Virtual assistant</strong><span>Voice and text support via ElevenLabs</span></div></div>
+        </div>
+        <div class="support-guide">
+          <h3>What can Nova help with?</h3>
+          <p>Get quick answers or try an end-to-end support conversation.</p>
+          <details class="faq" open><summary>Where's my order?</summary><p>Nova can check a demo order after verifying your account details. Test orders include <strong>12345</strong> (shipped) and <strong>67890</strong> (processing).</p></details>
+          <details class="faq"><summary>What's the returns policy?</summary><p>Eligible items may be returned within 30 days of delivery with proof of purchase. Opened electronics are excluded from standard change-of-mind returns.</p></details>
+          <details class="faq"><summary>Can I change my delivery address?</summary><p>Changes are available only for eligible processing orders, after identity verification and your explicit confirmation. Shipped orders cannot be changed.</p></details>
+          <details class="faq"><summary>Can Nova help me choose a product?</summary><p>Absolutely. Ask about features, prices or recommendations for your space and budget. Nova doesn't have live stock or checkout access.</p></details>
+          <div class="widget-hint"><span class="hint-arrow" aria-hidden="true">↘</span> Open the Nova widget in the bottom-right corner to get started.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <a class="logo" href="#top" aria-label="NovaMart home"><span class="logo-mark" aria-hidden="true">✳</span><span>nova<span class="dot">.</span>mart</span></a>
+        <div class="footer-links"><a href="#products">Shop the collection</a><a href="#support">Help &amp; FAQs</a><a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer">Powered by ElevenLabs ↗</a></div>
+      </div>
+      <div class="footnote"><span>© 2026 NovaMart. A fictional retail experience for the ElevenLabs Partner Deployment Engineer Lab.</span><span>Demo site only · No actual purchases, payments or deliveries.</span></div>
+    </div>
+  </footer>
+
+  <dialog id="product-dialog" aria-labelledby="dialog-title">
+    <button type="button" class="dialog-close" aria-label="Close product details">×</button>
+    <div class="dialog-wrap">
+      <div class="dialog-art" id="dialog-art" aria-hidden="true"></div>
+      <div class="dialog-content">
+        <div class="product-category" id="dialog-category"></div>
+        <h2 id="dialog-title"></h2>
+        <div class="dialog-price" id="dialog-price"></div>
+        <p class="dialog-text" id="dialog-text"></p>
+        <ul class="dialog-features" id="dialog-features"></ul>
+        <a class="btn btn-primary" href="#support" id="dialog-help">Ask Nova about this ↗</a>
+        <p class="dialog-foot">Fictional product details · Checkout disabled</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Official ElevenLabs widget. The three variables match this agent's initial workflow state. -->
+  <elevenlabs-convai
+    agent-id="agent_1301m7qh1d19fezah0pfch780zcz"
+    dynamic-variables='{"verification_attempts":0,"auth_ok":false,"order_status":"unchecked"}'
+    avatar-orb-color-1="#a1d5ae"
+    avatar-orb-color-2="#1f777c"
+    action-text="Need help? Ask Nova"
+    start-call-text="Talk to Nova"
+    end-call-text="End conversation"
+  ></elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+  <script>
+    (() => {
+      const filterButtons = [...document.querySelectorAll('[data-filter]')];
+      const cards = [...document.querySelectorAll('.product-card')];
+      const status = document.getElementById('items-status');
+
+      function setFilter(value) {
+        let visible = 0;
+        for (const card of cards) {
+          const show = value === 'all' || card.dataset.category === value;
+          card.hidden = !show;
+          if (show) visible += 1;
+        }
+        filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === value)));
+        status.textContent = 'Showing ' + visible + ' demo product' + (visible === 1 ? '' : 's');
+      }
+
+      filterButtons.forEach(button => button.addEventListener('click', () => setFilter(button.dataset.filter)));
+
+      // The Electronics navigation link both filters products and takes the user to the collection.
+      const electronicsLink = document.querySelector('.category-link');
+      electronicsLink.addEventListener('click', () => setFilter('electronics'));
+
+      const dialog = document.getElementById('product-dialog');
+      const dialogArt = document.getElementById('dialog-art');
+      const features = document.getElementById('dialog-features');
+
+      cards.forEach(card => {
+        card.querySelector('.quick-view').addEventListener('click', () => {
+          document.getElementById('dialog-title').textContent = card.querySelector('.product-name').textContent;
+          document.getElementById('dialog-category').textContent = card.querySelector('.product-category').textContent;
+          document.getElementById('dialog-price').textContent = card.querySelector('.price').textContent;
+          document.getElementById('dialog-text').textContent = card.dataset.description;
+          const art = card.querySelector('.art');
+          dialogArt.className = 'dialog-art ' + [...art.classList].filter(x => x.startsWith('art--')).join(' ');
+          dialogArt.innerHTML = art.querySelector('svg').outerHTML;
+          features.replaceChildren();
+          card.dataset.features.split('|').forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            features.appendChild(li);
+          });
+          if (typeof dialog.showModal === 'function') dialog.showModal();
+          else dialog.setAttribute('open', '');
+        });
+      });
+      dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+      document.getElementById('dialog-help').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close();
+      });
+    })();
+  </script>
+</body>
+</html>
