@@ -27,6 +27,22 @@ This repository is public, and the site lives at the repository root.
 
 The URL above is a deployment target, not a claim the site has already been published. Verify it loads before sharing it for the assignment.
 
+## Nova widget branding and page actions
+
+The existing `favicon.svg` NovaMart star is reused as the ElevenLabs widget avatar and the on-page Nova assistant icon. The site now has multiple `Ask Nova` entry points (navbar, hero, product section, support card, advice FAQ, and support prompt); they expand the embedded widget without automatically beginning a microphone call.
+
+The widget's `elevenlabs-convai:call` event registers the browser-side client tool handler `showProducts`. **This HTML change does not create the tool in the live ElevenLabs agent.** In the ElevenLabs dashboard, configure a Client tool with the exact case-sensitive name `showProducts`, attach it to the **Product Support** Subagent, and specify:
+
+- `category`: optional string; one of `all`, `electronics`, `home` (defaults to `all`).
+- `sku`: optional string, e.g. `NM-H202` (when provided, the page selects and highlights that product).
+- Tool purpose: show the requested catalogue category or specific NovaMart product in the user's browser. Do not call for a question that does not ask to *see* the website/products. Only works in the embedded widget, not phone calls.
+
+Suggested Product Support instruction: "When someone explicitly asks to see or browse NovaMart products on the website, invoke `showProducts` with the category or known catalogue SKU, then give a brief spoken response. Don't claim navigation succeeded unless the tool confirms success."
+
+To offer **first-message quick replies** (Find a product / Track my order / Returns policy), configure them in **Channels → Widget → Rich content → First message replies**. Those are dashboard settings, not HTML changes. The current agent export already has rich content buttons and carousel enabled.
+
+Verification: open the GitHub Pages site in a browser and click each Nova CTA; the widget should expand. Ask Nova "Show me electronics" after creating the client tool: the page should filter to Electronics and scroll to the catalogue. Ask for `NM-H202` to check product highlighting. Verify a voice conversation can still start normally.
+
 ## Test the Nova widget
 
 1. Open the published site using HTTPS and find the floating Nova bubble in the bottom-right corner.
