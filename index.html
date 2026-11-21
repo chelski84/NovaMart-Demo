@@ -43,7 +43,7 @@
     .nav-links { display: flex; align-items: center; gap: clamp(16px, 3vw, 36px); margin-left: auto; font-weight: 600; font-size: .86rem; }
     .nav-links a { color: #455d5c; transition: color .2s; }
     .nav-links a:hover, .footer-links a:hover { color: #0b9690; }
-    .nav-help { border: 1px solid #1e5351; padding: 11px 19px; border-radius: 100px; font-size: .84rem; white-space: nowrap; font-weight: 700; transition: background .2s, color .2s; }
+    .nav-help { border: 1px solid #1e5351; padding: 11px 19px; border-radius: 100px; font-size: .84rem; white-space: nowrap; font-weight: 700; transition: background .2s, color .2s; background: transparent; color: var(--ink); cursor: pointer; }
     .nav-help:hover { color: white; background: var(--ink); }
     .hero { padding-top: clamp(38px, 6vw, 76px); padding-bottom: 58px; }
     .hero-grid { display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: clamp(30px, 5vw, 70px); }
@@ -125,10 +125,12 @@
     .support-section h2 { font-size: clamp(2.75rem, 4.9vw, 4.7rem); line-height: 1.04; margin: 18px 0 18px; }
     .support-section h2 em { color: var(--lime); font-style: normal; }
     .support-section .lead { font-size: .99rem; line-height: 1.8; color: #c4d7d0; max-width: 420px; }
-    .support-agent { display: inline-flex; align-items: center; gap: 12px; padding: 13px 18px; background: rgba(223,248,227,.1); border: 1px solid rgba(223,248,227,.2); border-radius: 15px; margin-top: 16px; }
-    .agent-orb { width: 37px; height: 37px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #d6ffb7, #81d9b0 45%, #3592a4); box-shadow: 0 0 0 4px rgba(255,255,255,.07); }
+    .support-agent { display: inline-flex; align-items: center; gap: 12px; padding: 13px 18px; background: rgba(223,248,227,.1); border: 1px solid rgba(223,248,227,.2); border-radius: 15px; margin-top: 16px; color: #f8fff9; text-align: left; cursor: pointer; transition: background .2s, transform .2s; }
+    .support-agent:hover { background: rgba(223,248,227,.19); transform: translateY(-2px); }
+    .agent-star { width: 37px; height: 37px; border-radius: 11px; flex: 0 0 auto; box-shadow: 0 0 0 4px rgba(255,255,255,.07); }
     .support-agent strong { display: block; font-size: .81rem; }
-    .support-agent span { display: block; font-size: .74rem; color: #afcdc1; margin-top: 3px; }
+    .support-agent .support-agent-subtitle { display: block; font-size: .74rem; color: #afcdc1; margin-top: 3px; }
+    .support-agent .support-launch-arrow { margin-left: 10px; font-size: 1.2rem; color: var(--lime); }
     .support-guide { background: #f8fcf6; color: var(--ink); border-radius: 27px; padding: clamp(24px, 4vw, 37px); box-shadow: 0 20px 55px rgba(4,30,28,.15); }
     .support-guide h3 { margin: 0 0 6px; font-size: 1.7rem; }
     .support-guide > p { font-size: .85rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 19px; }
@@ -139,8 +141,15 @@
     .faq summary::after { content: "+"; font: 400 1.6rem/1 Outfit,sans-serif; color: var(--sea); }
     .faq[open] summary::after { content:"−"; }
     .faq p { color: #62756e; line-height: 1.65; font-size: .83rem; padding: 0 17px 17px 0; margin: 0; }
-    .widget-hint { background: #e5f4e6; padding: 17px 18px; border-radius: 15px; color: #255546; font-size: .82rem; font-weight: 700; margin-top: 22px; display: flex; align-items: center; gap: 10px; }
+    .widget-hint { width: 100%; border: 0; background: #e5f4e6; padding: 17px 18px; border-radius: 15px; color: #255546; font-size: .82rem; font-weight: 700; margin-top: 22px; display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer; }
+    .widget-hint:hover { background: #d5ecd9; }
+    .widget-hint .hint-label { flex: 1; }
     .hint-arrow { font-size: 1.25rem; flex: 0 0 auto; }
+    .collection-ask { background: #fff; border-color: #cbd7cf; color: var(--ink); white-space: nowrap; flex: 0 0 auto; }
+    .collection-ask:hover { background: var(--mint); }
+    .inline-nova { border: 0; background: transparent; color: var(--sea); font-weight: 800; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+    #products, .product-card { scroll-margin-top: 110px; }
+    .product-card.nova-highlight { outline: 3px solid var(--sea); outline-offset: 3px; }
     .footer { padding: 36px 0; }
     .footer-top { display: flex; justify-content: space-between; align-items: center; gap: 25px; }
     .footer .logo { font-size: 1.55rem; }
@@ -193,6 +202,7 @@
       .benefit, .benefit:first-child { padding: 9px 0; border-right: 0; }
       .section-head { display: block; }
       .section-head h2 { font-size: 2.6rem; }
+      .collection-ask { margin-top: 18px; }
       .items-status { flex-basis: 100%; margin: 4px 0 0; }
       .product-grid { gap: 11px; }
       .art { height: 156px; }
@@ -312,7 +322,7 @@
         <a href="#products" class="category-link">Electronics</a>
         <a href="#support">Help &amp; FAQs</a>
       </div>
-      <a class="nav-help" href="#support">Ask Nova <span aria-hidden="true">↗</span></a>
+      <button class="nav-help nova-launch" type="button" aria-label="Open Nova for help or advice">Ask Nova <span aria-hidden="true">↗</span></button>
     </nav>
   </header>
 
@@ -327,7 +337,7 @@
             <a class="btn btn-primary" href="#products">Explore the collection
               <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
             </a>
-            <a class="btn btn-ghost" href="#support">Meet Nova <span aria-hidden="true">↗</span></a>
+            <button class="btn btn-ghost nova-launch" type="button">Meet Nova <span aria-hidden="true">↗</span></button>
           </div>
           <div class="hero-footnote"><span class="pulse" aria-hidden="true"></span> A fictional shopping experience, powered by AI support.</div>
         </div>
@@ -364,6 +374,7 @@
     <section class="collection container" id="products" aria-labelledby="collection-title">
       <div class="section-head">
         <div><span class="eyebrow"><span class="line" aria-hidden="true"></span> The NovaMart edit</span><h2 id="collection-title">Made for real life.</h2><p>From workday essentials to home comforts. Find your next favourite in our demo collection.</p></div>
+        <button class="btn collection-ask nova-launch" type="button">Need advice? Ask Nova <span aria-hidden="true">↗</span></button>
       </div>
       <div class="filter-row" role="group" aria-label="Filter products by category">
         <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All products <span>10</span></button>
@@ -423,16 +434,17 @@
           <span class="support-kicker"><span aria-hidden="true">✳</span> Your friendly AI support</span>
           <h2 id="support-title">Say hello<br />to <em>Nova.</em></h2>
           <p class="lead">Wondering about an order, returns or which product to pick? Nova is here to help, using the same fictional catalogue and support information as this store.</p>
-          <div class="support-agent"><span class="agent-orb" aria-hidden="true"></span><div><strong>Nova · Virtual assistant</strong><span>Voice and text support via ElevenLabs</span></div></div>
+          <button class="support-agent nova-launch" type="button" aria-label="Open Nova virtual assistant"><img class="agent-star" src="./favicon.svg" alt="" /><span><strong>Nova · Virtual assistant</strong><span class="support-agent-subtitle">Help and advice via voice or text</span></span><span class="support-launch-arrow" aria-hidden="true">↗</span></button>
         </div>
         <div class="support-guide">
           <h3>What can Nova help with?</h3>
           <p>Get quick answers or try an end-to-end support conversation.</p>
-          <details class="faq" open><summary>Where's my order?</summary><p>Nova can check a demo order after verifying your account details. Test orders include <strong>12345</strong> (shipped) and <strong>67890</strong> (processing).</p></details>
+          <details class="faq" open><summary>Where's my order?</summary><p>Nova can check your order status after verifying your account details. Have your order number ready.</p></details>
+          <details class="faq"><summary>Need product advice?</summary><p>Tell Nova what you need and your budget for tailored suggestions from our catalogue. <button class="inline-nova nova-launch" type="button">Ask Nova for advice ↗</button></p></details>
           <details class="faq"><summary>What's the returns policy?</summary><p>Eligible items may be returned within 30 days of delivery with proof of purchase. Opened electronics are excluded from standard change-of-mind returns.</p></details>
           <details class="faq"><summary>Can I change my delivery address?</summary><p>Changes are available only for eligible processing orders, after identity verification and your explicit confirmation. Shipped orders cannot be changed.</p></details>
           <details class="faq"><summary>Can Nova help me choose a product?</summary><p>Absolutely. Ask about features, prices or recommendations for your space and budget. Nova doesn't have live stock or checkout access.</p></details>
-          <div class="widget-hint"><span class="hint-arrow" aria-hidden="true">↘</span> Open the Nova widget in the bottom-right corner to get started.</div>
+          <button class="widget-hint nova-launch" type="button" aria-label="Open the Nova assistant"><span class="hint-arrow" aria-hidden="true">✳</span><span class="hint-label">Need help or advice? Click here to talk to Nova.</span><span aria-hidden="true">↗</span></button>
         </div>
       </div>
     </section>
@@ -466,13 +478,18 @@
 
   <!-- Official ElevenLabs widget. The three variables match this agent's initial workflow state. -->
   <elevenlabs-convai
+    id="nova-widget"
     agent-id="agent_1301m7qh1d19fezah0pfch780zcz"
     dynamic-variables='{"verification_attempts":0,"auth_ok":false,"order_status":"unchecked"}'
-    avatar-orb-color-1="#a1d5ae"
-    avatar-orb-color-2="#1f777c"
-    action-text="Need help? Ask Nova"
+    avatar-image-url="./favicon.svg"
+    avatar-orb-color-1="#c9fb83"
+    avatar-orb-color-2="#0d6965"
+    action-text="Help or advice? Ask Nova"
     start-call-text="Talk to Nova"
     end-call-text="End conversation"
+    expand-text="Open Nova"
+    listening-text="Nova is listening..."
+    speaking-text="Nova is speaking..."
   ></elevenlabs-convai>
   <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
 
@@ -481,6 +498,20 @@
       const filterButtons = [...document.querySelectorAll('[data-filter]')];
       const cards = [...document.querySelectorAll('.product-card')];
       const status = document.getElementById('items-status');
+      const widget = document.getElementById('nova-widget');
+
+      // Opening the widget is separate from starting a voice call; users choose voice or text.
+      function openNova() {
+        widget?.dispatchEvent(new CustomEvent('elevenlabs-agent:expand', {
+          detail: { action: 'expand' },
+          bubbles: true,
+          composed: true
+        }));
+      }
+
+      document.querySelectorAll('.nova-launch').forEach(button => {
+        button.addEventListener('click', openNova);
+      });
 
       function setFilter(value) {
         let visible = 0;
@@ -492,6 +523,36 @@
         filterButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === value)));
         status.textContent = 'Showing ' + visible + ' demo product' + (visible === 1 ? '' : 's');
       }
+
+      // ElevenLabs Client tool: register a matching "showProducts" tool in the Product Support Subagent.
+      // Runs in the web widget only; never accepts arbitrary URLs from the agent.
+      widget?.addEventListener('elevenlabs-convai:call', (event) => {
+        if (!event.detail?.config) return;
+        event.detail.config.clientTools = {
+          ...event.detail.config.clientTools,
+          showProducts: ({ category = 'all', sku } = {}) => {
+            const requestedSku = typeof sku === 'string' ? sku.trim().toUpperCase() : '';
+            const product = requestedSku
+              ? cards.find(card => card.dataset.sku === requestedSku)
+              : null;
+            if (requestedSku && !product) {
+              return { success: false, error: 'That product is not in the demo catalogue.' };
+            }
+            const selectedCategory = product?.dataset.category ||
+              (['electronics', 'home'].includes(category) ? category : 'all');
+            setFilter(selectedCategory);
+            (product || document.getElementById('products')).scrollIntoView({
+              behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+              block: 'start'
+            });
+            if (product) {
+              product.classList.add('nova-highlight');
+              window.setTimeout(() => product.classList.remove('nova-highlight'), 4500);
+            }
+            return { success: true, category: selectedCategory, sku: product?.dataset.sku || null };
+          }
+        };
+      });
 
       filterButtons.forEach(button => button.addEventListener('click', () => setFilter(button.dataset.filter)));
 
